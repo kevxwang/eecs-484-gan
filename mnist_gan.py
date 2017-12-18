@@ -8,7 +8,7 @@ from tensorflow.examples.tutorials.mnist import input_data
 mnist = input_data.read_data_sets("MNIST_data/", one_hot=True)
 
 #training parameters
-training_steps = 10000
+training_steps = 5000
 batch_size = 128
 generator_input_size = 100
 
@@ -60,11 +60,12 @@ generator_objective = -tf.reduce_mean(tf.log(discriminator_fake))
 
 
 discriminator_optimizer = tf.train.AdamOptimizer().minimize(discriminator_objective, var_list=discriminator_parameters)
-generator_optimizer = tf.train.AdamOptimizer().minimize(generator_objective, var_list=discriminator_parameters)
+generator_optimizer = tf.train.AdamOptimizer().minimize(generator_objective, var_list=generator_parameters)
 
 
 
 def main():
+    #np.random.seed(12345)
     discriminator_losses = []
     generator_losses = []
     training_iterations = np.arange(0, training_steps, 1)
