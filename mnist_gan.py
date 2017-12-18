@@ -85,14 +85,17 @@ def main():
             print(current_discriminator_loss, current_generator_loss)
             output_image = sess.run(generator(generator_input), {generator_input: sample_random(1, generator_input_size)})
             output_image.shape = (28, 28)
-            #cmap = plt.cm.binary
-            #output_image = cmap(output_image)
-            plt.imsave('test_image.png', output_image, cmap='gray')
-            #cmap = plt.cm.binary
+            file_name = 'image_' + str(i) + '.png'
+            plt.imsave(file_name, output_image, cmap='gray')
 
 
     #plot loss over training_iterations
-    plt.plot(training_iterations, discriminator_losses, 'r', generator_losses, 'b')
+    discriminator_plot, = plt.plot(training_iterations, discriminator_losses, 'r', label="discriminator_plot")
+    generator_plot, = plt.plot(training_iterations, generator_losses, 'b', label="generator_plot")
+    plt.legend([discriminator_plot, generator_plot], ['Discriminator Loss', 'Generator Loss'])
+    plt.xlabel('Training iteration')
+    plt.ylabel('Loss')
+    plt.title('GAN Loss vs. Training Iterations')
     plt.savefig('loss.png')
 if __name__ == '__main__':
     main()
